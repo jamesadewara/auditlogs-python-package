@@ -1,0 +1,4 @@
+# Runtime dependencies; pyproject.toml is the source of truth.
+pydantic>=2.7,<3
+cryptography>=42
+rfc3161-client>=1.0

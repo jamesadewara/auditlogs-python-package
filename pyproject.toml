@@ -1,0 +1,72 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "auditlogs-verify"
+dynamic = ["version"]
+description = "Offline verifier for AuditLogs audits: hash chain and Ed25519 checkpoint signatures"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{ name = "James Adewara", email = "jamesadewara1@gmail.com" }]
+keywords = ["audit", "audit-log", "compliance", "tamper-evident", "hash-chain", "verification"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: System :: Logging",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.7,<3",
+    "cryptography>=42",
+    "rfc3161-client>=1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.5",
+    "mypy>=1.10",
+    "build>=1.2",
+]
+
+[project.scripts]
+auditlogs-verify = "auditlogs_verify.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/jamesadewara/auditlogs-python-package"
+Issues = "https://github.com/jamesadewara/auditlogs-python-package/issues"
+
+[tool.hatch.version]
+path = "src/auditlogs_verify/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/auditlogs_verify"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/auditlogs_verify", "tests", "docs", "README.md", "CHANGELOG.md", "LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["src/auditlogs_verify"]
